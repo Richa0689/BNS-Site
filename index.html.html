@@ -1,0 +1,1720 @@
+    <!-- Tour Package Details Modal -->
+    <div id="packageModal" class="package-modal">
+        <div class="package-modal-content">
+            <div class="package-modal-header">
+                        // Visa Services Functions
+        function showVisaContent(contentId) {
+            // Hide all content
+            document.querySelectorAll('.visa-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.visa-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(contentId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Visa Modal Functions
+        function openVisaModal(country) {
+            const modal = document.getElementById('visaModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalTitle.textContent = `${country} Visa Requirements`;
+            
+            // Sample visa requirements data
+            const visaData = {
+                'USA': {
+                    type: 'Tourist/Business B1/B2 Visa',
+                    processing: '15-30 working days',
+                    validity: '10 years (multiple entry)',
+                    documents: [
+                        'Valid passport (minimum 6 months validity)',
+                        'Completed DS-160 form',
+                        'Visa application fee payment receipt',
+                        '2x2 inch color photograph (white background)',
+                        'Bank statements (last 6 months)',
+                        'Employment letter and salary slips',
+                        'Income Tax Returns (last 3 years)',
+                        'Travel itinerary and hotel bookings',
+                        'Property documents',
+                        'Marriage certificate (if applicable)',
+                        'Previous travel history documents'
+                    ],
+                    interview: true,
+                    fee: '₹14,000 + Service Charges'
+                },
+                'UK': {
+                    type: 'Standard Visitor Visa',
+                    processing: '15-25 working days',
+                    validity: '6 months to 10 years',
+                    documents: [
+                        'Valid passport (minimum 6 months validity)',
+                        'Completed online application form',
+                        'Biometric information',
+                        'Recent passport-sized color photograph',
+                        'Bank statements (last 6 months)',
+                        'Employment letter and payslips',
+                        'Income Tax Returns',
+                        'Accommodation proof',
+                        'Travel itinerary',
+                        'Marriage certificate (if applicable)'
+                    ],
+                    interview: false,
+                    fee: '₹9,500 + Service Charges'
+                },
+                'Schengen': {
+                    type: 'Short Stay C Type Visa',
+                    processing: '10-15 working days',
+                    validity: '90 days in 180 days period',
+                    documents: [
+                        'Valid passport (minimum 3 months validity)',
+                        'Completed visa application form',
+                        'Recent passport photographs',
+                        'Travel insurance (minimum €30,000)',
+                        'Flight reservations',
+                        'Accommodation proof',
+                        'Bank statements (last 3 months)',
+                        'Employment certificate',
+                        'Income Tax Returns',
+                        'Cover letter explaining purpose of visit'
+                    ],
+                    interview: false,
+                    fee: '₹7,500 + Service Charges'
+                },
+                'Dubai': {
+                    type: 'Tourist eVisa',
+                    processing: '3-5 working days',
+                    validity: '30/90 days',
+                    documents: [
+                        'Valid passport (minimum 6 months validity)',
+                        'Passport first and last page scan',
+                        'Recent color photograph',
+                        'Return flight tickets',
+                        'Hotel reservation confirmation',
+                        'Bank statements (last 3 months)',
+                        'Employment letter'
+                    ],
+                    interview: false,
+                    fee: '₹8,500 + Service Charges'
+                },
+                'Singapore': {
+                    type: 'Tourist eVisa',
+                    processing: '3-7 working days',
+                    validity: '35 days (single entry)',
+                    documents: [
+                        'Valid passport (minimum 6 months validity)',
+                        'Completed Form 14A',
+                        'Recent color photograph',
+                        'Flight reservations',
+                        'Hotel bookings',
+                        'Bank statements (last 3 months)',
+                        'Employment certificate',
+                        'Cover letter'
+                    ],
+                    interview: false,
+                    fee: '₹4,500 + Service Charges'
+                }
+            };
+            
+            const data = visaData[country] || visaData['USA'];
+            
+            modalBody.innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: #1e3c72; margin-bottom: 1rem;">Visa Details</h4>
+                    <p><strong>Visa Type:</strong> ${data.type}</p>
+                    <p><strong>Processing Time:</strong> ${data.processing}</p>
+                    <p><strong>Validity:</strong> ${data.validity}</p>
+                    <p><strong>Interview Required:</strong> ${data.interview ? 'Yes' : 'No'}</p>
+                    <p><strong>Visa Fee:</strong> ${data.fee}</p>
+                </div>
+                
+                <div class="document-list">
+                    <h4 style="color: #1e3c72; margin-bottom: 1rem;">Required Documents</h4>
+                    ${data.documents.map(doc => `
+                        <div class="document-item">
+                            <span class="document-icon">📄</span>
+                            <span>${doc}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #e8f5e8; border-radius: 10px; border-left: 4px solid #28a745;">
+                    <h4 style="color: #28a745; margin-bottom: 0.5rem;">✅ Why Choose BNS Holidays for ${country} Visa?</h4>
+                    <ul style="margin: 0; padding-left: 1.5rem; color: #555;">
+                        <li>99% Visa Success Rate</li>
+                        <li>Expert Document Review</li>
+                        <li>Interview Preparation (if required)</li>
+                        <li>Real-time Application Tracking</li>
+                        <li>24/7 Customer Support</li>
+                        <li>Fastest Processing Time</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="#contact" onclick="closeVisaModal()" style="display: inline-block; background: linear-gradient(45deg, #f1c40f, #f39c12); color: #333; padding: 1rem 2rem; text-decoration: none; border-radius: 25px; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Apply for ${country} Visa Now</a>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVisaModal() {
+            document.getElementById('visaModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('visaModal');
+            if (event.target === modal) {
+                closeVisaModal();
+            }
+        });
+
+        // Enhanced form submission with visa interest
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            if (!data.name || !data.email || !data.phone) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Create detailed inquiry message
+            let inquiryDetails = `
+Thank you for your interest in BNS Holidays!
+
+Customer Details:
+- Name: ${data.name}
+- Email: ${data.email}
+- Phone: ${data.phone}
+- Preferred Destination: ${data.destination || 'Not specified'}
+- Budget Range: ${data.budget || 'Not specified'}
+- Number of Travelers: ${data.travelers || 'Not specified'}
+
+Special Requirements:
+${data.message || 'None specified'}
+
+Our visa and travel experts will contact you within 2 hours with:
+✅ Detailed itinerary and pricing
+✅ Visa requirements and documentation checklist
+✅ Best available deals and offers
+✅ Complete travel assistance
+
+For immediate assistance, please call: +91 98765 43210
+Email: bnsholidays@bnsholidays.co.in
+            `;
+            
+            alert(inquiryDetails);
+            this.reset();
+        });
+
+        // Enhanced destination card interactions
+        document.querySelectorAll('.destination-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('h3').textContent;
+                const price = this.querySelector('.card-price').textContent;
+                
+                // Auto-fill contact form with destination
+                const destinationSelect = document.querySelector('#destination');
+                const contactForm = document.querySelector('#contact');
+                
+                // Map destination names to form values
+                const destinationMap = {
+                    'Goa Beach Paradise': 'goa',
+                    'Kerala Backwaters': 'kerala',
+                    'Himachal Adventures': 'himachal',
+                    'Rajasthan Royal': 'rajasthan',
+                    'Andaman Islands': 'andaman',
+                    'International Packages': 'international'
+                };
+                
+                const mappedValue = destinationMap[title] || 'custom';
+                destinationSelect.value = mappedValue;
+                
+                alert(`Interested in ${title}!\n${price}\n\nWe've pre-selected this destination in the contact form below. Please fill out your details for a customized quote including visa assistance if required.`);
+                
+                contactForm.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Add visa quick inquiry buttons to destination cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const internationalCard = document.querySelector('.destination-card:last-child');
+            if (internationalCard) {
+                const quickVisaBtn = document.createElement('div');
+                quickVisaBtn.innerHTML = `
+                    <button onclick="openVisaModal('USA')" style="background: #28a745; color: white; border: none; padding: 0.5rem 1rem; border-radius: 15px; font-size: 0.8rem; margin-top: 0.5rem; cursor: pointer; transition: all 0.3s ease;">
+                        Quick Visa Check
+                    </button>
+                `;
+                internationalCard.querySelector('.card-content').appendChild(quickVisaBtn);
+            }
+        });
+
+        // Add live chat simulation
+        let chatVisible = false;
+        
+        function createLiveChat() {
+            const chatWidget = document.createElement('div');
+            chatWidget.id = 'livechat';
+            chatWidget.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(45deg, #28a745, #20c997);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+                z-index: 1500;
+                font-size: 1.5rem;
+                color: white;
+                transition: all 0.3s ease;
+            `;
+            chatWidget.innerHTML = '💬';
+            chatWidget.title = 'Chat with Visa Expert';
+            
+            chatWidget.addEventListener('click', function() {
+                if (!chatVisible) {
+                    const chatBox = document.createElement('div');
+                    chatBox.id = 'chatbox';
+                    chatBox.style.cssText = `
+                        position: fixed;
+                        bottom: 90px;
+                        right: 20px;
+                        width: 300px;
+                        height: 400px;
+                        background: white;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                        z-index: 1600;
+                        overflow: hidden;
+                        animation: slideInUp 0.3s ease;
+                    `;
+                    
+                    chatBox.innerHTML = `
+                        <div style="background: linear-gradient(45deg, #1e3c72, #2a5298); color: white; padding: 1rem; font-weight: bold;">
+                            <span>BNS Holidays - Visa Expert</span>
+                            <span style="float: right; cursor: pointer;" onclick="this.parentElement.parentElement.remove(); chatVisible = false;">×</span>
+                        </div>
+                        <div style="padding: 1rem; height: 300px; overflow-y: auto;">
+                            <div style="background: #f0f0f0; padding: 0.8rem; border-radius: 10px; margin-bottom: 1rem;">
+                                👋 Hi! I'm here to help with your visa requirements. What destination are you planning?
+                            </div>
+                            <div style="background: #e3f2fd; padding: 0.8rem; border-radius: 10px; margin-bottom: 1rem; text-align: right;">
+                                Quick options:
+                                <br><button onclick="openVisaModal('USA')" style="margin: 0.2rem; padding: 0.3rem 0.8rem; border: none; background: #1e3c72; color: white; border-radius: 15px; cursor: pointer;">USA</button>
+                                <button onclick="openVisaModal('UK')" style="margin: 0.2rem; padding: 0.3rem 0.8rem; border: none; background: #1e3c72; color: white; border-radius: 15px; cursor: pointer;">UK</button>
+                                <button onclick="openVisaModal('Schengen')" style="margin: 0.2rem; padding: 0.3rem 0.8rem; border: none; background: #1e3c72; color: white; border-radius: 15px; cursor: pointer;">Europe</button>
+                            </div>
+                        </div>
+                        <div style="padding: 1rem; border-top: 1px solid #eee;">
+                            <div style="text-align: center;">
+                                <a href="#contact" style="background: #28a745; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 20px; font-size: 0.9rem;">Start Application</a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(chatBox);
+                    chatVisible = true;
+                    
+                    // Add animation
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes slideInUp {
+                            from { transform: translateY(20px); opacity: 0; }
+                            to { transform: translateY(0); opacity: 1; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            });
+            
+            document.body.appendChild(chatWidget);
+        }
+        
+        // Initialize live chat after page load
+        document.addEventListener('DOMContentLoaded', createLiveChat);<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNS Holidays - Where Every Journey Begins with a Smile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            color: #f1c40f;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23ff6b6b" width="1200" height="600"/><polygon fill="%23ee5a52" points="0,600 600,0 1200,600"/><circle fill="%23ffd93d" cx="200" cy="100" r="60"/><path fill="%2351cf66" d="M800,300 Q900,200 1000,300 Q1100,400 1200,300 L1200,600 L800,600 Z"/><circle fill="%23ffffff" cx="900" cy="150" r="20" opacity="0.8"/><circle fill="%23ffffff" cx="950" cy="120" r="15" opacity="0.6"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+            color: #333;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
+        }
+
+        /* Destinations Section */
+        .destinations {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-image {
+            height: 250px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::before {
+            content: '📸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .card-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            color: #f1c40f;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #f1c40f;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+            color: #333;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+/* Assistant Styles */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            height: 700px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .services-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .service-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 11px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.5;
+        }
+
+        .user-message .message-content {
+            background: #0066cc;
+            color: white;
+        }
+
+        .bot-message .message-content {
+            background: white;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0066cc;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #0052a3;
+        }
+
+        .quick-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .quick-option {
+            padding: 12px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .quick-option:hover {
+            background: #0066cc;
+            color: white;
+        }
+
+        .input-container {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        .send-btn {
+            padding: 12px 25px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .send-btn:hover {
+            background: #0052a3;
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    
+
+
+
+/* Assistant Toggle Styles */
+#assistant-toggle {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    border-radius: 50%;
+    color: white;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(30,60,114,0.4);
+    z-index: 10000;
+    transition: all 0.3s ease;
+}
+#assistant-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 22px rgba(30,60,114,0.6);
+}
+#assistant-widget.minimized {
+    display: none;
+}
+@media (max-width: 768px) {
+    #assistant-widget {
+        width: 90% !important;
+        height: 70% !important;
+        right: 5%;
+    }
+    #assistant-header {
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #assistant-header button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+
+    #assistant-header {
+        background: linear-gradient(135deg, #0066cc, #0052a3);
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #assistant-header button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                🏖️ BNS HOLIDAYS
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>BNS HOLIDAYS</h1>
+            <p>Where Every Journey Begins with a Smile</p>
+            <a href="#contact" class="cta-button">Plan Your Dream Trip</a>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="destinations">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Popular Destinations</h2>
+            <div class="destinations-grid">
+                <div class="destination-card animate-on-scroll">
+                    <div class="card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffa726);"></div>
+                    <div class="card-content">
+                        <h3>Goa Beach Paradise</h3>
+                        <p>Pristine beaches, vibrant nightlife, and Portuguese heritage. Perfect for relaxation and adventure.</p>
+                        <div class="card-price">Starting from ₹15,999</div>
+                    </div>
+                </div>
+
+                <div class="destination-card animate-on-scroll">
+                    <div class="card-image" style="background: linear-gradient(45deg, #4ecdc4, #44a08d);"></div>
+                    <div class="card-content">
+                        <h3>Kerala Backwaters</h3>
+                        <p>Serene houseboats, lush greenery, and traditional Ayurvedic treatments in God's Own Country.</p>
+                        <div class="card-price">Starting from ₹22,999</div>
+                    </div>
+                </div>
+
+                <div class="destination-card animate-on-scroll">
+                    <div class="card-image" style="background: linear-gradient(45deg, #667eea, #764ba2);"></div>
+                    <div class="card-content">
+                        <h3>Himachal Adventures</h3>
+                        <p>Snow-capped mountains, adventure sports, and hill station charm in the lap of Himalayas.</p>
+                        <div class="card-price">Starting from ₹18,999</div>
+                    </div>
+                </div>
+
+                <div class="destination-card animate-on-scroll">
+                    <div class="card-image" style="background: linear-gradient(45deg, #f093fb, #f5576c);"></div>
+                    <div class="card-content">
+                        <h3>Rajasthan Royal</h3>
+                        <p>Majestic palaces, desert safaris, and rich cultural heritage in the Land of Kings.</p>
+                        <div class="card-price">Starting from ₹25,999</div>
+                    </div>
+                </div>
+
+                <div class="destination-card animate-on-scroll">
+                    <div class="card-image" style="background: linear-gradient(45deg, #4facfe, #00f2fe);"></div>
+                    <div class="card-content">
+                        <h3>Andaman Islands</h3>
+                        <p>Crystal clear waters, coral reefs, and pristine beaches for the ultimate tropical experience.</p>
+                        <div class="card-price">Starting from ₹32,999</div>
+                    </div>
+                </div>
+
+                <div class="destination-card animate-on-scroll">
+                    <div class="card-image" style="background: linear-gradient(45deg, #fa709a, #fee140);"></div>
+                    <div class="card-content">
+                        <h3>International Packages</h3>
+                        <p>Explore exotic destinations worldwide with our carefully curated international tour packages.</p>
+                        <div class="card-price">Starting from ₹45,999</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Our Complete Travel Services</h2>
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🎯</div>
+                    <h3>Customize Tour Packages</h3>
+                    <p>Tailor-made itineraries designed specifically for your preferences, budget, and travel style. Every detail crafted to create your perfect journey.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🇮🇳</div>
+                    <h3>Domestic Tour Packages</h3>
+                    <p>Explore incredible India with our comprehensive domestic tour packages covering all major destinations from Kashmir to Kanyakumari.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🌍</div>
+                    <h3>International Tour Packages</h3>
+                    <p>Discover the world with our expertly crafted international tour packages to Europe, Asia, America, Australia and beyond.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🚢</div>
+                    <h3>Cruise Booking</h3>
+                    <p>Sail the seas in luxury with our cruise booking services. From Mediterranean to Caribbean, experience the ultimate floating vacation.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">✈️</div>
+                    <h3>Flight Booking</h3>
+                    <p>Best deals on domestic and international flights with all major airlines. Compare prices and book the most convenient options.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🏨</div>
+                    <h3>Hotel & Villa Booking</h3>
+                    <p>From luxury resorts to budget hotels and private villas, we offer accommodations worldwide to suit every preference and budget.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">📋</div>
+                    <h3>Visa Services</h3>
+                    <p>Complete visa assistance for all destinations. Document preparation, application submission, and tracking - we handle it all for you.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">📘</div>
+                    <h3>Passport Assistance</h3>
+                    <p>New passport applications, renewals, and emergency passport services. Get your travel document ready without any hassle.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🚗</div>
+                    <h3>Cab Booking</h3>
+                    <p>Reliable transportation solutions for airport transfers, local sightseeing, and intercity travel with professional drivers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info animate-on-scroll">
+                    <h3>Contact Information</h3>
+                    <p>📧 bnsholidays@bnsholidays.co.in</p>
+                    <p>📱 +91 98765 43210</p>
+                    <p>🏢 Pune, Maharashtra</p>
+                    <p>🌐 www.bnsholidays.co.in</p>
+                    
+                    <h3 style="margin-top: 2rem;">Why Choose BNS Holidays?</h3>
+                    <ul style="list-style: none; margin-top: 1rem;">
+                        <li>✅ 3+ Years Experience</li>
+                        <li>✅ 1000+ Happy Clients</li>
+                        <li>✅ 24/7 Customer Support</li>
+                        <li>✅ Best Price Guarantee</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-form animate-on-scroll">
+                    <h3 style="color: #f1c40f; margin-bottom: 1.5rem;">Plan Your Trip</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Preferred Destination</label>
+                            <select id="destination" name="destination">
+                                <option value="">Select Destination</option>
+                                <option value="goa">Goa</option>
+                                <option value="kerala">Kerala</option>
+                                <option value="himachal">Himachal Pradesh</option>
+                                <option value="rajasthan">Rajasthan</option>
+                                <option value="andaman">Andaman</option>
+                                <option value="international">International</option>
+                                <option value="custom">Custom Package</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <select id="budget" name="budget">
+                                <option value="">Select Budget</option>
+                                <option value="15000-25000">₹15,000 - ₹25,000</option>
+                                <option value="25000-50000">₹25,000 - ₹50,000</option>
+                                <option value="50000-100000">₹50,000 - ₹1,00,000</option>
+                                <option value="100000+">₹1,00,000+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="travelers">Number of Travelers</label>
+                            <input type="number" id="travelers" name="travelers" min="1" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Special Requirements</label>
+                            <textarea id="message" name="message" rows="3" placeholder="Tell us about your preferences, special occasions, or any specific requirements..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Get Custom Quote</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BNS Holidays. All rights reserved. | Where Every Journey Begins with a Smile</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.name || !data.email || !data.phone) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Here you would typically send the data to your server
+            // For now, we'll just show a success message
+            alert('Thank you for your interest! We will contact you within 24 hours with a customized quote.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Destination card click handlers
+        document.querySelectorAll('.destination-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('h3').textContent;
+                const price = this.querySelector('.card-price').textContent;
+                alert(`Interest in ${title}!\n${price}\n\nPlease fill out the contact form below to get detailed itinerary and booking information.`);
+                
+                // Scroll to contact form
+                document.querySelector('#contact').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add floating animation to hero section
+        let heroContent = document.querySelector('.hero-content');
+        let scrollY = 0;
+
+        function updateHeroParallax() {
+            scrollY = window.pageYOffset;
+            heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
+            requestAnimationFrame(updateHeroParallax);
+        }
+        
+        updateHeroParallax();
+    </script>
+
+<!-- BNS Holidays Assistant Widget -->
+<div id="assistant-widget" style="position:fixed;bottom:20px;right:20px;width:400px;max-width:90%;height:600px;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,0.3);border-radius:20px;overflow:hidden;">
+    <div id="assistant-header">
+        <span>Travel Assistant</span>
+        <button onclick="minimizeAssistant()">–</button>
+    </div>
+
+    
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="company-name">🌍 BNS HOLIDAYS</div>
+            <div class="tagline">Your personal travel planning companion</div>
+            <div class="services-tags">
+                <span class="service-tag">✈️ Air Tickets</span>
+                <span class="service-tag">📄 Visa Services</span>
+                <span class="service-tag">🌍 Tour Packages</span>
+                <span class="service-tag">📘 Passport</span>
+                <span class="service-tag">🚗 Cab Booking</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    Welcome to BNS Holidays! 🎉 Your trusted travel partner!<br><br>
+                    Please fill out the form below to get started.
+                </div>
+            </div>
+
+            <div class="contact-form" id="contactForm">
+                <div class="form-title">📝 Quick Contact Form</div>
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contact Number *</label>
+                    <input type="tel" id="userPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Travel Date</label>
+                    <input type="date" id="travelDate">
+                </div>
+                <div class="form-group">
+                    <label>Requirements</label>
+                    <textarea id="requirements" rows="2"></textarea>
+                </div>
+                <button class="submit-btn" onclick="submitForm()">Submit & Continue ✈️</button>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" class="input-field" id="userInput" placeholder="Please fill the form first..." disabled>
+            <button class="send-btn" id="sendBtn" disabled>Send</button>
+        </div>
+    </div>
+
+    <script>
+        let formSubmitted = false;
+
+        function submitForm() {
+            // Get values
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const phone = document.getElementById('userPhone').value;
+            const date = document.getElementById('travelDate').value || 'Not specified';
+            const requirements = document.getElementById('requirements').value || 'General inquiry';
+
+            // Validate
+            if (!name || !email || !phone) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            // Hide form
+            document.getElementById('contactForm').style.display = 'none';
+            
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'message bot-message';
+            successMsg.innerHTML = '<div class="message-content">✅ Thank you! Your details have been received.<br><br>Now you can ask me about:<br>• Flight bookings<br>• Visa documents<br>• Tour packages<br>• Passport services<br>• Cab bookings</div>';
+            document.getElementById('chatMessages').appendChild(successMsg);
+
+            // Show service buttons
+            const options = document.createElement('div');
+            options.className = 'quick-options';
+            options.innerHTML = `
+                <button class="quick-option" onclick="askAbout('flight')">✈️ Flights</button>
+                <button class="quick-option" onclick="askAbout('visa')">📄 Visa</button>
+                <button class="quick-option" onclick="askAbout('tour')">🌍 Tours</button>
+                <button class="quick-option" onclick="askAbout('passport')">📘 Passport</button>
+                <button class="quick-option" onclick="askAbout('cab')">🚗 Cab</button>
+                <button class="quick-option" onclick="askAbout('contact')">📞 Contact</button>
+            `;
+            document.getElementById('chatMessages').appendChild(options);
+
+            // Enable chat
+            document.getElementById('userInput').disabled = false;
+            document.getElementById('userInput').placeholder = "Ask me anything about travel...";
+            document.getElementById('sendBtn').disabled = false;
+            formSubmitted = true;
+
+            // Send email
+            const emailBody = `BNS Holidays Inquiry\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nDate: ${date}\nRequirements: ${requirements}`;
+            window.open(`mailto:anupam0689@gmail.com?subject=New Travel Inquiry&body=${encodeURIComponent(emailBody)}`);
+
+            // WhatsApp (after 2 seconds)
+            setTimeout(() => {
+                if (confirm('Send inquiry via WhatsApp too?')) {
+                    const waMsg = `BNS Holidays\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nDate: ${date}\nRequirements: ${requirements}`;
+                    window.open(`https://wa.me/917066630228?text=${encodeURIComponent(waMsg)}`);
+                }
+            }, 2000);
+
+            // Try Google Form submission
+            submitToGoogle(name, email, phone, date, requirements);
+        }
+
+        function submitToGoogle(name, email, phone, date, requirements) {
+            const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfr8WxASQkLwTlRluu0iybz0DK8M9JiuPvk8idiUyUpZi2SlA/formResponse';
+            
+            // Create hidden iframe
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'hidden_iframe';
+            document.body.appendChild(iframe);
+
+            // Create form
+            const form = document.createElement('form');
+            form.action = formUrl;
+            form.method = 'POST';
+            form.target = 'hidden_iframe';
+            form.style.display = 'none';
+
+            // Add fields (using the entry IDs you found)
+            const entries = [
+                ['entry.2005620554', requirements],
+                ['entry.1045781291', email],
+                ['entry.1065046570', name],
+                ['entry.1166974658', phone],
+                ['entry.839337160', date],
+                ['entry.1930564529', `${name} - ${phone}`]
+            ];
+
+            entries.forEach(([fieldName, value]) => {
+                const input = document.createElement('input');
+                input.name = fieldName;
+                input.value = value;
+                form.appendChild(input);
+            });
+
+            document.body.appendChild(form);
+            form.submit();
+            
+            // Cleanup
+            setTimeout(() => {
+                document.body.removeChild(form);
+                document.body.removeChild(iframe);
+            }, 2000);
+        }
+
+        function askAbout(topic) {
+            const responses = {
+                'flight': '✈️ <b>FLIGHT BOOKING</b><br><br>Please provide:<br>• From & To cities<br>• Departure date<br>• Return date<br>• Number of passengers<br>• Class preference<br><br>Call: +91 7066630228',
+                'visa': '📄 <b>VISA DOCUMENTS</b><br><br><b>USA:</b> Passport, DS-160, Photos, Bank Statements<br><b>Schengen:</b> Application, Insurance, Hotel bookings<br><b>UK:</b> VAF form, IHS payment<br><br>Which country do you need?',
+                'tour': '🌍 <b>TOUR PACKAGES</b><br><br>• Dubai 4N/5D - ₹35,000<br>• Thailand 5N/6D - ₹28,000<br>• Kashmir 6N/7D - ₹25,000<br>• Bali 5N/6D - ₹45,000<br><br>Which destination?',
+                'passport': '📘 <b>PASSPORT SERVICES</b><br><br><b>Fees:</b><br>• Fresh: ₹2,000<br>• Tatkal: ₹4,000<br><br><b>Documents:</b><br>• Aadhaar Card<br>• Birth Certificate<br>• Address Proof<br>• Photos',
+                'cab': '🚗 <b>CAB SERVICES</b><br><br>• Sedan: ₹12/km<br>• SUV: ₹16/km<br>• Tempo: ₹22/km<br><br>Share your route for quote!',
+                'contact': '📞 <b>CONTACT US</b><br><br>Phone/WhatsApp: +91 7066630228<br>Email: anupam0689@gmail.com<br>Hours: Mon-Sat, 9 AM - 7 PM'
+            };
+
+            const msg = document.createElement('div');
+            msg.className = 'message bot-message';
+            msg.innerHTML = `<div class="message-content">${responses[topic]}</div>`;
+            document.getElementById('chatMessages').appendChild(msg);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        // Send button click
+        document.getElementById('sendBtn').onclick = function() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            
+            if (text && formSubmitted) {
+                // Add user message
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user-message';
+                userMsg.innerHTML = `<div class="message-content">${text}</div>`;
+                document.getElementById('chatMessages').appendChild(userMsg);
+                
+                // Clear input
+                input.value = '';
+                
+                // Bot response
+                setTimeout(() => {
+                    let response = 'How can I help you? Try asking about flights, visa, tours, passport, or cab services.';
+                    
+                    const lower = text.toLowerCase();
+                    if (lower.includes('visa')) {
+                        response = '📄 Which country visa do you need? I can provide complete document checklist.';
+                    } else if (lower.includes('flight')) {
+                        response = '✈️ Please share your travel route and dates for best flight options.';
+                    } else if (lower.includes('passport')) {
+                        response = '📘 Passport fees: Fresh ₹2,000, Tatkal ₹4,000. Need document list?';
+                    } else if (lower.includes('tour')) {
+                        response = '🌍 We have packages for Dubai, Thailand, Kashmir, Bali. Which interests you?';
+                    } else if (lower.includes('cab')) {
+                        response = '🚗 Share your pickup-drop locations for cab booking.';
+                    }
+                    
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message bot-message';
+                    botMsg.innerHTML = `<div class="message-content">${response}</div>`;
+                    document.getElementById('chatMessages').appendChild(botMsg);
+                    document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                }, 500);
+            }
+        };
+
+        // Enter key
+        document.getElementById('userInput').onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('sendBtn').click();
+            }
+        };
+    </script>
+
+</div>
+<script>
+
+        let formSubmitted = false;
+
+        function submitForm() {
+            // Get values
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const phone = document.getElementById('userPhone').value;
+            const date = document.getElementById('travelDate').value || 'Not specified';
+            const requirements = document.getElementById('requirements').value || 'General inquiry';
+
+            // Validate
+            if (!name || !email || !phone) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            // Hide form
+            document.getElementById('contactForm').style.display = 'none';
+            
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'message bot-message';
+            successMsg.innerHTML = '<div class="message-content">✅ Thank you! Your details have been received.<br><br>Now you can ask me about:<br>• Flight bookings<br>• Visa documents<br>• Tour packages<br>• Passport services<br>• Cab bookings</div>';
+            document.getElementById('chatMessages').appendChild(successMsg);
+
+            // Show service buttons
+            const options = document.createElement('div');
+            options.className = 'quick-options';
+            options.innerHTML = `
+                <button class="quick-option" onclick="askAbout('flight')">✈️ Flights</button>
+                <button class="quick-option" onclick="askAbout('visa')">📄 Visa</button>
+                <button class="quick-option" onclick="askAbout('tour')">🌍 Tours</button>
+                <button class="quick-option" onclick="askAbout('passport')">📘 Passport</button>
+                <button class="quick-option" onclick="askAbout('cab')">🚗 Cab</button>
+                <button class="quick-option" onclick="askAbout('contact')">📞 Contact</button>
+            `;
+            document.getElementById('chatMessages').appendChild(options);
+
+            // Enable chat
+            document.getElementById('userInput').disabled = false;
+            document.getElementById('userInput').placeholder = "Ask me anything about travel...";
+            document.getElementById('sendBtn').disabled = false;
+            formSubmitted = true;
+
+            // Send email
+            const emailBody = `BNS Holidays Inquiry\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nDate: ${date}\nRequirements: ${requirements}`;
+            window.open(`mailto:anupam0689@gmail.com?subject=New Travel Inquiry&body=${encodeURIComponent(emailBody)}`);
+
+            // WhatsApp (after 2 seconds)
+            setTimeout(() => {
+                if (confirm('Send inquiry via WhatsApp too?')) {
+                    const waMsg = `BNS Holidays\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nDate: ${date}\nRequirements: ${requirements}`;
+                    window.open(`https://wa.me/917066630228?text=${encodeURIComponent(waMsg)}`);
+                }
+            }, 2000);
+
+            // Try Google Form submission
+            submitToGoogle(name, email, phone, date, requirements);
+        }
+
+        function submitToGoogle(name, email, phone, date, requirements) {
+            const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfr8WxASQkLwTlRluu0iybz0DK8M9JiuPvk8idiUyUpZi2SlA/formResponse';
+            
+            // Create hidden iframe
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'hidden_iframe';
+            document.body.appendChild(iframe);
+
+            // Create form
+            const form = document.createElement('form');
+            form.action = formUrl;
+            form.method = 'POST';
+            form.target = 'hidden_iframe';
+            form.style.display = 'none';
+
+            // Add fields (using the entry IDs you found)
+            const entries = [
+                ['entry.2005620554', requirements],
+                ['entry.1045781291', email],
+                ['entry.1065046570', name],
+                ['entry.1166974658', phone],
+                ['entry.839337160', date],
+                ['entry.1930564529', `${name} - ${phone}`]
+            ];
+
+            entries.forEach(([fieldName, value]) => {
+                const input = document.createElement('input');
+                input.name = fieldName;
+                input.value = value;
+                form.appendChild(input);
+            });
+
+            document.body.appendChild(form);
+            form.submit();
+            
+            // Cleanup
+            setTimeout(() => {
+                document.body.removeChild(form);
+                document.body.removeChild(iframe);
+            }, 2000);
+        }
+
+        function askAbout(topic) {
+            const responses = {
+                'flight': '✈️ <b>FLIGHT BOOKING</b><br><br>Please provide:<br>• From & To cities<br>• Departure date<br>• Return date<br>• Number of passengers<br>• Class preference<br><br>Call: +91 7066630228',
+                'visa': '📄 <b>VISA DOCUMENTS</b><br><br><b>USA:</b> Passport, DS-160, Photos, Bank Statements<br><b>Schengen:</b> Application, Insurance, Hotel bookings<br><b>UK:</b> VAF form, IHS payment<br><br>Which country do you need?',
+                'tour': '🌍 <b>TOUR PACKAGES</b><br><br>• Dubai 4N/5D - ₹35,000<br>• Thailand 5N/6D - ₹28,000<br>• Kashmir 6N/7D - ₹25,000<br>• Bali 5N/6D - ₹45,000<br><br>Which destination?',
+                'passport': '📘 <b>PASSPORT SERVICES</b><br><br><b>Fees:</b><br>• Fresh: ₹2,000<br>• Tatkal: ₹4,000<br><br><b>Documents:</b><br>• Aadhaar Card<br>• Birth Certificate<br>• Address Proof<br>• Photos',
+                'cab': '🚗 <b>CAB SERVICES</b><br><br>• Sedan: ₹12/km<br>• SUV: ₹16/km<br>• Tempo: ₹22/km<br><br>Share your route for quote!',
+                'contact': '📞 <b>CONTACT US</b><br><br>Phone/WhatsApp: +91 7066630228<br>Email: anupam0689@gmail.com<br>Hours: Mon-Sat, 9 AM - 7 PM'
+            };
+
+            const msg = document.createElement('div');
+            msg.className = 'message bot-message';
+            msg.innerHTML = `<div class="message-content">${responses[topic]}</div>`;
+            document.getElementById('chatMessages').appendChild(msg);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        // Send button click
+        document.getElementById('sendBtn').onclick = function() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            
+            if (text && formSubmitted) {
+                // Add user message
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user-message';
+                userMsg.innerHTML = `<div class="message-content">${text}</div>`;
+                document.getElementById('chatMessages').appendChild(userMsg);
+                
+                // Clear input
+                input.value = '';
+                
+                // Bot response
+                setTimeout(() => {
+                    let response = 'How can I help you? Try asking about flights, visa, tours, passport, or cab services.';
+                    
+                    const lower = text.toLowerCase();
+                    if (lower.includes('visa')) {
+                        response = '📄 Which country visa do you need? I can provide complete document checklist.';
+                    } else if (lower.includes('flight')) {
+                        response = '✈️ Please share your travel route and dates for best flight options.';
+                    } else if (lower.includes('passport')) {
+                        response = '📘 Passport fees: Fresh ₹2,000, Tatkal ₹4,000. Need document list?';
+                    } else if (lower.includes('tour')) {
+                        response = '🌍 We have packages for Dubai, Thailand, Kashmir, Bali. Which interests you?';
+                    } else if (lower.includes('cab')) {
+                        response = '🚗 Share your pickup-drop locations for cab booking.';
+                    }
+                    
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message bot-message';
+                    botMsg.innerHTML = `<div class="message-content">${response}</div>`;
+                    document.getElementById('chatMessages').appendChild(botMsg);
+                    document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                }, 500);
+            }
+        };
+
+        // Enter key
+        document.getElementById('userInput').onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('sendBtn').click();
+            }
+        };
+    
+</script>
+
+
+<script>
+function minimizeAssistant() {
+    document.getElementById('assistant-widget').classList.add('minimized');
+    document.getElementById('assistant-toggle').style.display = 'flex';
+}
+function openAssistant() {
+    document.getElementById('assistant-widget').classList.remove('minimized');
+    document.getElementById('assistant-toggle').style.display = 'none';
+}
+</script>
+<div id="assistant-toggle" onclick="openAssistant()">💬</div>
+
+</body>
+</html>
